@@ -18,6 +18,14 @@ const app = {
         for(let i = 0; i < buttonsSign.length; i++) {
             buttonsSign[i].addEventListener('click', app.handleCalc);
         }
+
+        // Equal button
+        const buttonEqual = document.querySelector('button#equal');
+        buttonEqual.addEventListener('click', app.handleCalculResult);
+
+        // Reset button
+        const buttonReset = document.querySelector('button#reset');
+        buttonReset.addEventListener('click', app.handleReset);
     },
 
     //? Number handler
@@ -43,6 +51,70 @@ const app = {
         app.calcul = app.calcul + ' ' + value + ' ';
         inputCalcul.value = app.calcul;
         app.number = '';
+        inputCurrentNumber.value = app.number;
+    },
+
+    //? Result handler
+    handleCalculResult: (e) => {
+        // Split on spaces, wich give a table
+        const number = app.calcul.split(' ');
+        let result = 0;
+
+        for(let i = 0; i < number.length; i++) {
+            switch (number[i]){
+                // if sign is +
+                case '+' :
+                    if(result === 0) {
+                        // Calculation between numbers before and after the sign
+                        result = parseInt(number[i-1], 10) + parseInt(number[i+1], 10);
+                    } else {
+                        // Calculation between the result ever done and the next number
+                        result += parseInt(number[i+1], 10);
+                    }
+                    break;
+                // if sign is -
+                case '-' :
+                    if(result === 0) {
+                        result = parseInt(number[i-1], 10) - parseInt(number[i+1], 10);
+                    } else {
+                        result -= parseInt(number[i+1], 10);
+                    }
+                    break;
+                // if sign is *
+                case '*' :
+                    if(result === 0) {
+                        result = parseInt(number[i-1], 10) * parseInt(number[i+1], 10);
+                    } else {
+                        result = result * parseInt(number[i+1], 10);
+                    }
+                    break;
+                // if sign is /
+                case '*' :
+                    if(result === 0) {
+                        result = parseInt(number[i-1], 10) / parseInt(number[i+1], 10);
+                    } else {
+                        result = result / parseInt(number[i+1], 10);
+                    }
+                    break;
+            }
+            
+        }
+        const inputCurrentNumber = document.querySelector('#currentNumber');
+        const inputCalcul = document.querySelector('#calcul');
+        // Recovery the calculation with the sign =
+        inputCalcul.value = app.calcul + ' ' + '=';
+        inputCurrentNumber.value = result;
+    },
+
+    //? Reset handler
+    handleReset: (e) => {
+        // Update variables
+        app.calcul = "";
+        app.number = "";
+        // Update inputs
+        const inputCurrentNumber = document.querySelector('#currentNumber');
+        const inputCalcul = document.querySelector('#calcul');
+        inputCalcul.value = app.calcul;
         inputCurrentNumber.value = app.number;
     }
 }
