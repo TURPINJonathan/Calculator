@@ -1,2 +1,2 @@
 # Calculator
-A calculator with which you can record your results
+A calculator with which you can record your results.
