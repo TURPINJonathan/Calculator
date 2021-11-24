@@ -3,6 +3,10 @@ const app = {
     number: "",
     calcul: "",
 
+    //? Inputs
+    inputCurrentNumber: document.querySelector('#currentNumber'),
+    inputCalcul: document.querySelector('#calcul'),
+
     //? Initial method
     init: () => {
         // Select number's buttons
@@ -37,21 +41,18 @@ const app = {
         // Increment the value to calcul
         app.calcul = app.calcul + value;
         // Increment  number to #currentNumber
-        const inputCurrentNumber = document.querySelector('#currentNumber');
-        inputCurrentNumber.value = app.number
+        app.inputCurrentNumber.value = app.number
     },
 
     //? Sign handler
     handleCalc: (e) => {
         // Take the value
         const value = e.currentTarget.value;
-        const inputCalcul = document.querySelector('#calcul');
-        const inputCurrentNumber = document.querySelector('#currentNumber');
         // Add sign by concatenation
         app.calcul = app.calcul + ' ' + value + ' ';
-        inputCalcul.value = app.calcul;
+        app.inputCalcul.value = app.calcul;
         app.number = '';
-        inputCurrentNumber.value = app.number;
+        app.inputCurrentNumber.value = app.number;
     },
 
     //? Result handler
@@ -99,11 +100,9 @@ const app = {
             }
             
         }
-        const inputCurrentNumber = document.querySelector('#currentNumber');
-        const inputCalcul = document.querySelector('#calcul');
         // Recovery the calculation with the sign =
-        inputCalcul.value = app.calcul + ' ' + '=';
-        inputCurrentNumber.value = result;
+        app.inputCalcul.value = app.calcul + ' ' + '=';
+        app.inputCurrentNumber.value = result;
     },
 
     //? Reset handler
@@ -112,10 +111,8 @@ const app = {
         app.calcul = "";
         app.number = "";
         // Update inputs
-        const inputCurrentNumber = document.querySelector('#currentNumber');
-        const inputCalcul = document.querySelector('#calcul');
-        inputCalcul.value = app.calcul;
-        inputCurrentNumber.value = app.number;
+        app.inputCalcul.value = app.calcul;
+        app.inputCurrentNumber.value = app.number;
     }
 }
 
